@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex's Digital Day - AI Safety Adventure</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="animated-background">
+        <div class="glitch-overlay"></div>
+        <div class="matrix-rain"></div>
+        <div class="floating-particles"></div>
+    </div>
+
+    <!-- Audio Elements -->
+    <audio id="background-music" loop>
+        <source src="/assets/audio/background-music.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="success-sound">
+        <source src="/assets/audio/success.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="error-sound">
+        <source src="/assets/audio/error.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="click-sound">
+        <source src="/assets/audio/click.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Mobile Rotation Warning -->
+    <div id="rotate-warning" class="rotate-warning">
+        <div class="rotate-content">
+            <div class="phone-icon">📱</div>
+            <h2>Please Rotate Your Device</h2>
+            <p>This experience is best viewed in landscape mode</p>
+            <div class="rotate-arrow">↻</div>
+        </div>
+    </div>
+
+    <!-- Game Container -->
+    <div id="game-container" class="game-container">
+        <!-- Intro Screen -->
+        <div id="intro-screen" class="intro-screen">
+            <div class="intro-content">
+                <div class="title-animation">
+                    <h1 class="main-title">
+                        <span class="title-word glitch-text" style="--delay: 0s">Alex's</span>
+                        <span class="title-word glitch-text" style="--delay: 0.5s">Digital</span>
+                        <span class="title-word glitch-text" style="--delay: 1s">Day</span>
+                    </h1>
+                    <p class="subtitle">An AI Safety Adventure</p>
+                </div>
+                
+                <div class="character-intro">
+                    <div class="character alex">
+                        <div class="character-avatar">👨‍🎓</div>
+                        <h3>Alex</h3>
+                        <p>College Student</p>
+                    </div>
+                    <div class="character sarah">
+                        <div class="character-avatar">👩‍💼</div>
+                        <h3>Sarah</h3>
+                        <p>Best Friend</p>
+                    </div>
+                    <div class="character maya">
+                        <div class="character-avatar">👩‍💻</div>
+                        <h3>Maya</h3>
+                        <p>AI Security Expert</p>
+                    </div>
+                </div>
+
+                <div class="intro-description">
+                    <p>In a world where AI can create fake videos, clone voices, and generate realistic photos, digital deception is everywhere. Help Alex navigate through AI-generated threats and learn to protect yourself online!</p>
+                </div>
+
+                <button class="start-btn" onclick="showIntroStory()">
+                    <span class="btn-icon">🚀</span>
+                    Begin Adventure
+                </button>
+            </div>
+        </div>
+
+        <!-- Introduction Story Screen -->
+        <div id="intro-story-screen" class="intro-story-screen hidden">
+            <div class="story-intro-content">
+                <h2 class="glitch-text">The Rise of AI Deception</h2>
+                <div class="story-panels" id="story-panels">
+                    <!-- Story panels will be populated by JavaScript -->
+                </div>
+                <div class="story-navigation">
+                    <button id="prev-panel" class="nav-btn" onclick="previousPanel()" disabled>← Previous</button>
+                    <span id="panel-indicator">1 / 5</span>
+                    <button id="next-panel" class="nav-btn" onclick="nextPanel()">Next →</button>
+                    <button id="start-game" class="start-btn hidden" onclick="startStory()">
+                        <span class="btn-icon">🎮</span>
+                        Start Game
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Header -->
+        <header id="game-header" class="game-header hidden">
+            <div class="character-status">
+                <div class="current-character">
+                    <div id="current-avatar" class="character-avatar small">👨‍🎓</div>
+                    <span id="current-name">Alex</span>
+                </div>
+            </div>
+            <h1 class="game-title glitch-text">Alex's Digital Day</h1>
+            <div class="stats-bar">
+                <div class="stat">
+                    <span class="stat-icon">⭐</span>
+                    <span id="score">0</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-icon">🏆</span>
+                    <span id="level">Beginner</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-icon">📊</span>
+                    <span id="progress">0/10</span>
+                </div>
+                <button id="audio-toggle" class="audio-toggle" onclick="toggleAudio()">🔊</button>
+            </div>
+        </header>
+
+        <!-- Progress Bar -->
+        <div id="progress-container" class="progress-container hidden">
+            <div id="progress-bar" class="progress-bar"></div>
+        </div>
+
+        <!-- Main Game Area -->
+        <main id="game-main" class="game-main hidden">
+            <!-- Story Content -->
+            <div id="story-content" class="story-content">
+                <div class="scene-image">
+                    <img id="scene-img" src="/assets/scenes/scene01-morning-surprise.png" alt="Scene" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div style="display:none; width:250px; height:150px; background:#e5e7eb; border-radius:12px; align-items:center; justify-content:center; color:#6b7280; font-size:3rem;">🖼️</div>
+                    <div class="characters-overlay" id="characters-overlay"></div>
+                </div>
+                <div class="story-text">
+                    <h2 id="story-title">Welcome to Alex's Day!</h2>
+                    <div class="dialogue-box">
+                        <div class="speaker" id="speaker">
+                            <div class="speaker-avatar" id="speaker-avatar">👨‍🎓</div>
+                            <span id="speaker-name">Alex</span>
+                        </div>
+                        <p id="dialogue-text">It's 8 AM and I'm getting ready for another day at college. Little do I know, I'm about to encounter some serious digital deception!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mini-Game Area -->
+            <div id="minigame-area" class="minigame-area">
+                <!-- Drag and Drop Game -->
+                <div id="drag-drop-game" class="minigame hidden">
+                    <h3>Help Alex identify real vs AI-generated images!</h3>
+                    <div class="game-instruction">Drag the images to the correct category</div>
+                    <div class="drag-drop-container">
+                        <div class="drop-zones">
+                            <div class="drop-zone" data-category="real">
+                                <h4>🖼️ Real Images</h4>
+                                <div class="drop-area" id="real-drop"></div>
+                            </div>
+                            <div class="drop-zone" data-category="ai">
+                                <h4>🤖 AI Generated</h4>
+                                <div class="drop-area" id="ai-drop"></div>
+                            </div>
+                        </div>
+                        <div class="draggable-items" id="draggable-items"></div>
+                    </div>
+                    <button id="check-drag-drop" class="minigame-btn" onclick="checkDragDrop()">Check Answer</button>
+                </div>
+
+                <!-- Mix and Match Game -->
+                <div id="mix-match-game" class="minigame hidden">
+                    <h3>Match the AI threats with their warning signs!</h3>
+                    <div class="game-instruction">Click to connect threats with their warning signs</div>
+                    <div class="mix-match-container">
+                        <div class="threats-column">
+                            <h4>🚨 AI Threats</h4>
+                            <div class="match-items" id="threats-list"></div>
+                        </div>
+                        <div class="signs-column">
+                            <h4>⚠️ Warning Signs</h4>
+                            <div class="match-items" id="signs-list"></div>
+                        </div>
+                    </div>
+                    <button id="check-mix-match" class="minigame-btn" onclick="checkMixMatch()">Check Matches</button>
+                </div>
+
+                <!-- Spot the Difference Game -->
+                <div id="spot-difference-game" class="minigame hidden">
+                    <h3>Spot the deepfake inconsistencies!</h3>
+                    <div class="game-instruction">Click on the suspicious areas in the image (find them one by one)</div>
+                    <div class="spot-container">
+                        <div class="spot-image-container">
+                            <img id="spot-image" src="/assets/minigames/spot-deepfake-video-call.png" alt="Spot the difference" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div style="display:none; width:400px; height:250px; background:#e5e7eb; border-radius:8px; align-items:center; justify-content:center; color:#6b7280; font-size:3rem;">🔍</div>
+                            <div class="spot-markers" id="spot-markers"></div>
+                        </div>
+                        <div class="spots-found">
+                            <h4>Inconsistencies Found: <span id="spots-count">0/3</span></h4>
+                            <div id="found-spots"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline Sorting Game -->
+                <div id="timeline-game" class="minigame hidden">
+                    <h3>Arrange the verification steps in correct order!</h3>
+                    <div class="game-instruction">Drag the steps to create the correct verification timeline</div>
+                    <div class="timeline-container">
+                        <div class="timeline-slots" id="timeline-slots"></div>
+                        <div class="timeline-items" id="timeline-items"></div>
+                    </div>
+                    <button id="check-timeline" class="minigame-btn" onclick="checkTimeline()">Check Order</button>
+                </div>
+
+                <!-- Pattern Recognition Game -->
+                <div id="pattern-game" class="minigame hidden">
+                    <h3>Identify the fake review patterns!</h3>
+                    <div class="game-instruction">Select all reviews that show signs of AI generation</div>
+                    <div class="reviews-container" id="reviews-container"></div>
+                    <button id="check-patterns" class="minigame-btn" onclick="checkPatterns()">Check Selection</button>
+                </div>
+            </div>
+
+            <!-- Story Choices -->
+            <div id="story-choices" class="story-choices">
+                <div id="choices-container" class="choices-container">
+                    <button class="choice-btn" onclick="nextScene()">
+                        <span class="choice-icon">▶️</span>
+                        Continue Story
+                    </button>
+                </div>
+            </div>
+
+            <!-- Feedback Area -->
+            <div id="feedback-area" class="feedback-area hidden">
+                <div class="feedback-content">
+                    <div id="feedback-icon" class="feedback-icon"></div>
+                    <h3 id="feedback-title"></h3>
+                    <p id="feedback-text"></p>
+                    <div class="educational-tip">
+                        <h4>💡 Learning Point</h4>
+                        <p id="educational-text"></p>
+                    </div>
+                    <div class="feedback-actions">
+                        <button id="continue-btn" class="continue-btn" onclick="continueStory()">Continue</button>
+                        <button id="retry-btn" class="retry-btn hidden" onclick="retryChallenge()">Try Again</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Achievement Popup -->
+        <div id="achievement-popup" class="achievement-popup hidden">
+            <div class="achievement-content">
+                <div class="achievement-badge">🏆</div>
+                <h3>Achievement Unlocked!</h3>
+                <p id="achievement-text"></p>
+            </div>
+        </div>
+
+        <!-- Real-Life Impact Warning -->
+        <div id="impact-warning" class="impact-warning hidden">
+            <div class="impact-content">
+                <div class="warning-icon">⚠️</div>
+                <h3>Real-Life Impact</h3>
+                <p id="impact-text"></p>
+                <div class="impact-consequences">
+                    <h4>Potential Consequences:</h4>
+                    <ul id="consequences-list"></ul>
+                </div>
+                <button class="impact-close-btn" onclick="closeImpactWarning()">Understood</button>
+            </div>
+        </div>
+
+        <!-- Image Modal -->
+        <div id="image-modal" class="image-modal hidden">
+            <div class="image-modal-close" onclick="closeImageModal()">×</div>
+            <img id="modal-image" src="/placeholder.svg" alt="Full size view">
+            <div class="image-modal-instructions">
+                Click anywhere to close • Examine the details carefully • Scroll to see full content
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
