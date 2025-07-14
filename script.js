@@ -74,13 +74,13 @@ const storyScenes = [
   {
     id: 1,
     title: "Morning Surprise",
-    image: "/assets/scenes/scene01-morning-surprise.png",
+    image: "assets/scenes/scene01-morning-surprise.png",
     speaker: "alex",
     dialogue:
       "Just woke up and got a video call from Sarah asking for emergency money. But something feels off about her face...",
     minigame: "spot-difference",
     minigameData: {
-      image: "/assets/minigames/spot-deepfake-video-call.png",
+      image: "assets/minigames/spot-deepfake-video-call.png",
       spots: [
         { x: 138, y: 138, description: "Digital artifacts and pixelation around the left jawline edge" },
         { x: 266, y: 124, description: "Unnatural jagged edges on the right side of the face" },
@@ -102,7 +102,7 @@ const storyScenes = [
   {
     id: 2,
     title: "The Perfect Profile",
-    image: "/assets/scenes/scene02-perfect-profile.png",
+    image: "assets/scenes/scene02-perfect-profile.png",
     speaker: "maya",
     dialogue:
       "Alex, I saw you got a friend request from someone with a suspiciously perfect profile. Let me teach you how to spot AI-generated faces!",
@@ -111,42 +111,42 @@ const storyScenes = [
       items: [
         {
           id: "img1",
-          image: "/assets/minigames/real-face-01.png",
+          image: "assets/minigames/real-face-01.png",
           category: "real",
           description: "Natural lighting",
           emoji: "👤",
         },
         {
           id: "img2",
-          image: "/assets/minigames/ai-face-01.png",
+          image: "assets/minigames/ai-face-01.png",
           category: "ai",
           description: "Perfect symmetry",
           emoji: "🤖",
         },
         {
           id: "img3",
-          image: "/assets/minigames/real-face-02.png",
+          image: "assets/minigames/real-face-02.png",
           category: "real",
           description: "Skin imperfections",
           emoji: "👨",
         },
         {
           id: "img4",
-          image: "/assets/minigames/ai-face-02.png",
+          image: "assets/minigames/ai-face-02.png",
           category: "ai",
           description: "Unnatural eyes",
           emoji: "👁️",
         },
         {
           id: "img5",
-          image: "/assets/minigames/real-face-03.png",
+          image: "assets/minigames/real-face-03.png",
           category: "real",
           description: "Asymmetrical features",
           emoji: "👩",
         },
         {
           id: "img6",
-          image: "/assets/minigames/ai-face-03.png",
+          image: "assets/minigames/ai-face-03.png",
           category: "ai",
           description: "Too perfect skin",
           emoji: "✨",
@@ -168,7 +168,7 @@ const storyScenes = [
   {
     id: 3,
     title: "Voice from the Past",
-    image: "/assets/scenes/scene03-voice-from-past.png",
+    image: "assets/scenes/scene03-voice-from-past.png",
     speaker: "alex",
     dialogue:
       "Got a voicemail from grandma asking me to call back urgently. But she usually texts... Maya, what should I do?",
@@ -197,7 +197,7 @@ const storyScenes = [
   {
     id: 4,
     title: "Identity Theft Alert",
-    image: "/assets/scenes/scene04-identity-theft.png",
+    image: "assets/scenes/scene04-identity-theft.png",
     speaker: "sarah",
     dialogue:
       "Alex! Someone created a fake account using your photos and is messaging our friends asking for money. We need to act fast!",
@@ -231,13 +231,13 @@ const storyScenes = [
   {
     id: 5,
     title: "Viral Deception",
-    image: "/assets/scenes/scene05-viral-deception.png",
+    image: "assets/scenes/scene05-viral-deception.png",
     speaker: "alex",
     dialogue:
       "This celebrity video is going viral, but something seems off about their mouth movements. Maya, is this a deepfake?",
     minigame: "spot-difference",
     minigameData: {
-      image: "/assets/minigames/spot-celebrity-deepfake.png",
+      image: "assets/minigames/spot-celebrity-deepfake.png",
       spots: [
         { x: 201, y: 90, description: "Mouth and teeth appear artificially generated with unnatural alignment" },
         { x: 182, y: 66, description: "Left eye has inconsistent lighting compared to the right eye" },
@@ -259,7 +259,7 @@ const storyScenes = [
   {
     id: 6,
     title: "The Perfect Match",
-    image: "/assets/scenes/scene06-perfect-match.png",
+    image: "assets/scenes/scene06-perfect-match.png",
     speaker: "maya",
     dialogue:
       "Alex, you've been chatting with someone online who seems too perfect. Let me show you signs that might indicate an AI chatbot.",
@@ -325,7 +325,7 @@ const storyScenes = [
   {
     id: 7,
     title: "Shopping Scam",
-    image: "/assets/scenes/scene07-shopping-scam.png",
+    image: "assets/scenes/scene07-shopping-scam.png",
     speaker: "alex",
     dialogue:
       "I'm looking at these product reviews and they all sound similar and were posted on the same day. That's suspicious, right?",
@@ -391,7 +391,7 @@ const storyScenes = [
   {
     id: 8,
     title: "Phishing Evolution",
-    image: "/assets/scenes/scene08-phishing-evolution.png",
+    image: "assets/scenes/scene08-phishing-evolution.png",
     speaker: "sarah",
     dialogue:
       "Alex got an email that perfectly mimics their bank's style and mentions real transactions. This is scary advanced!",
@@ -400,42 +400,42 @@ const storyScenes = [
       items: [
         {
           id: "email1",
-          image: "/assets/minigames/email-legitimate-01.png",
+          image: "assets/minigames/email-legitimate-01.png",
           category: "real",
           description: "Official domain",
           emoji: "✅",
         },
         {
           id: "email2",
-          image: "/assets/minigames/email-phishing-01.png",
+          image: "assets/minigames/email-phishing-01.png",
           category: "ai",
           description: "Suspicious sender",
           emoji: "⚠️",
         },
         {
           id: "email3",
-          image: "/assets/minigames/email-legitimate-02.png",
+          image: "assets/minigames/email-legitimate-02.png",
           category: "real",
           description: "Proper formatting",
           emoji: "📧",
         },
         {
           id: "email4",
-          image: "/assets/minigames/email-phishing-02.png",
+          image: "assets/minigames/email-phishing-02.png",
           category: "ai",
           description: "Urgent language",
           emoji: "🚨",
         },
         {
           id: "email5",
-          image: "/assets/minigames/email-legitimate-03.png",
+          image: "assets/minigames/email-legitimate-03.png",
           category: "real",
           description: "Expected timing",
           emoji: "⏰",
         },
         {
           id: "email6",
-          image: "/assets/minigames/email-phishing-03.png",
+          image: "assets/minigames/email-phishing-03.png",
           category: "ai",
           description: "Personal info fishing",
           emoji: "🎣",
@@ -457,13 +457,13 @@ const storyScenes = [
   {
     id: 9,
     title: "Media Manipulation",
-    image: "/assets/scenes/scene09-media-manipulation.png",
+    image: "assets/scenes/scene09-media-manipulation.png",
     speaker: "maya",
     dialogue:
       "This image looks suspicious. The lighting is off and there are strange artifacts around the edges. Let me teach you what to look for.",
     minigame: "spot-difference",
     minigameData: {
-      image: "/assets/minigames/spot-ai-generated-photo.png",
+      image: "assets/minigames/spot-ai-generated-photo.png",
       spots: [
         { x: 198, y: 40, description: "Face appears too smooth and perfect - lacks natural skin texture" },
         { x: 153, y: 73, description: "Left ear has unnatural shading and artificial appearance" },
@@ -485,7 +485,7 @@ const storyScenes = [
   {
     id: 10,
     title: "Quick AI Safety Quiz",
-    image: "/assets/scenes/scene10-final-challenge.png",
+    image: "assets/scenes/scene10-final-challenge.png",
     speaker: "maya",
     dialogue: "Before we finish, here's a quick question to test your knowledge!",
     minigame: "quiz",
