@@ -2,877 +2,436 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
     <title>Alex's Digital Day - AI Safety Adventure</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
     
     <style>
-        * {
+        /* Iframe template integration styles */
+        body {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Rajdhani', sans-serif;
-            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 50%, #16213e 100%);
-            color: #fff;
-            overflow-x: hidden;
-            min-height: 100vh;
-        }
-
-        /* Animated Background */
-        .animated-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #F0F0F0;
+            font-family: 'Rajdhani', Verdana, Geneva, Tahoma, sans-serif;
             overflow: hidden;
         }
 
-        .matrix-rain {
+        #rotation-overlay {
+            background: rgba(0,0,0,0.8);
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0.1;
-            animation: matrixfall 10s linear infinite;
+            top: -100vh;
+            z-index: 10000;
+            transition: top 0.3s ease;
         }
 
-        @keyframes matrixfall {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(100vh); }
+        #rotation-overlay div {
+            text-align: center;
+            color: whitesmoke;
         }
 
-        .floating-particles {
-            position: absolute;
-            width: 100%;
-            height: 100%;
+        #rotation-overlay svg {
+            animation: rotate 2s linear infinite;
         }
 
-        .particle {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: #00ffff;
-            border-radius: 50%;
-            animation: float 6s ease-in-out infinite;
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.3; }
-            50% { transform: translateY(-20px) rotate(180deg); opacity: 1; }
+        #main-container {
+            width: 960px;
+            height: 540px;
+            aspect-ratio: 16/9;
+            border: none;
+            background-color: aliceblue;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 
+                0 20px 40px rgba(0,0,0,0.1),
+                0 0 0 1px rgba(0, 255, 255, 0.3),
+                0 0 20px rgba(0, 255, 255, 0.4),
+                0 0 40px rgba(0, 255, 255, 0.3),
+                0 0 60px rgba(0, 255, 255, 0.2),
+                0 0 80px rgba(0, 255, 255, 0.1);
+            animation: containerGlow 3s ease-in-out infinite alternate;
         }
 
-        /* Glitch Effect */
-        .glitch-text {
-            position: relative;
-            font-family: 'Orbitron', monospace;
-            font-weight: 700;
-            color: #00ffff;
-            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
-            animation: glitch 2s infinite;
+        @keyframes containerGlow {
+            0% {
+                box-shadow: 
+                    0 20px 40px rgba(0,0,0,0.1),
+                    0 0 0 1px rgba(0, 255, 255, 0.3),
+                    0 0 20px rgba(0, 255, 255, 0.4),
+                    0 0 40px rgba(0, 255, 255, 0.3),
+                    0 0 60px rgba(0, 255, 255, 0.2),
+                    0 0 80px rgba(0, 255, 255, 0.1);
+            }
+            100% {
+                box-shadow: 
+                    0 20px 40px rgba(0,0,0,0.1),
+                    0 0 0 1px rgba(0, 255, 255, 0.5),
+                    0 0 20px rgba(0, 255, 255, 0.6),
+                    0 0 40px rgba(0, 255, 255, 0.5),
+                    0 0 60px rgba(0, 255, 255, 0.4),
+                    0 0 80px rgba(0, 255, 255, 0.3),
+                    0 0 100px rgba(0, 255, 255, 0.2);
+            }
         }
 
-        @keyframes glitch {
-            0% { text-shadow: 0 0 10px rgba(0, 255, 255, 0.5); }
-            20% { text-shadow: 2px 0 #ff00ff, -2px 0 #00ffff; }
-            40% { text-shadow: 0 0 10px rgba(0, 255, 255, 0.5); }
-            60% { text-shadow: -2px 0 #ff00ff, 2px 0 #00ffff; }
-            80% { text-shadow: 0 0 10px rgba(0, 255, 255, 0.5); }
-            100% { text-shadow: 0 0 10px rgba(0, 255, 255, 0.5); }
+        /* Show rotation overlay on portrait mobile */
+        @media only screen 
+        and (min-device-width: 375px) 
+        and (orientation: portrait) { 
+            #rotation-overlay {
+                top: 0;
+            }
         }
 
-        /* Game Container */
+        /* Scale down on small landscape screens */
+        @media only screen 
+        and (max-width: 767px) and (orientation: landscape) { 
+            #main-container {
+                transform: scale(0.6);
+            }
+        }
+
+        /* Tablet adjustments */
+        @media only screen 
+        and (min-width: 768px) and (max-width: 1023px) {
+            #main-container {
+                transform: scale(0.8);
+            }
+        }
+
+        /* Game container styles - adapted for iframe integration */
         .game-container {
             width: 100%;
-            min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        /* Intro Screen */
-        .intro-screen {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .intro-content {
-            max-width: 800px;
-            animation: fadeInUp 1s ease-out;
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .main-title {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            font-family: 'Orbitron', monospace;
-            text-align: center;
-        }
-
-        .title-word {
-            display: inline-block;
-            margin: 0 0.5rem;
-            animation: titleSlide 0.8s ease-out forwards;
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        .title-word:nth-child(1) { animation-delay: 0.2s; }
-        .title-word:nth-child(2) { animation-delay: 0.4s; }
-        .title-word:nth-child(3) { animation-delay: 0.6s; }
-
-        @keyframes titleSlide {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .subtitle {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            color: #ccc;
-            font-weight: 300;
-        }
-
-        .character-intro {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin: 2rem 0;
-            flex-wrap: wrap;
-        }
-
-        .character {
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(0, 255, 255, 0.3);
-            border-radius: 15px;
-            padding: 1.5rem;
-            text-align: center;
-            min-width: 150px;
-            transition: all 0.3s ease;
-        }
-
-        .character:hover {
-            transform: translateY(-5px);
-            border-color: #00ffff;
-            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.3);
-        }
-
-        .character-avatar {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .character h3 {
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-            color: #00ffff;
-        }
-
-        .character p {
-            font-size: 0.9rem;
-            color: #ccc;
-        }
-
-        .intro-description {
-            max-width: 600px;
-            margin: 2rem auto;
-            font-size: 1.1rem;
-            line-height: 1.6;
-            color: #ddd;
-        }
-
-        .start-btn {
-            background: linear-gradient(45deg, #00ffff, #0099cc);
-            border: none;
-            color: white;
-            padding: 1rem 2rem;
-            font-size: 1.2rem;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Rajdhani', sans-serif;
-            font-weight: 600;
-            margin-top: 2rem;
-            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.3);
-        }
-
-        .start-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 255, 255, 0.5);
-        }
-
-        .btn-icon {
-            margin-right: 0.5rem;
-        }
-
-        /* Story Screen */
-        .story-screen {
-            display: none;
-            min-height: 100vh;
-            padding: 2rem;
-        }
-
-        .story-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            align-items: center;
-            min-height: 70vh;
-        }
-
-        .scene-image {
-            position: relative;
-            text-align: center;
-        }
-
-        .scene-placeholder {
-            width: 100%;
-            height: 300px;
-            background: linear-gradient(45deg, #2a2a3e, #3a3a5e);
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            color: #00ffff;
-            border: 2px solid rgba(0, 255, 255, 0.3);
-        }
-
-        .story-text {
-            padding: 2rem;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            border: 2px solid rgba(0, 255, 255, 0.3);
-        }
-
-        .story-title {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            color: #00ffff;
-        }
-
-        .dialogue-box {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 1.5rem;
-            border-radius: 10px;
-            border-left: 4px solid #00ffff;
-        }
-
-        .speaker {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .speaker-avatar {
-            font-size: 2rem;
-            margin-right: 0.5rem;
-        }
-
-        .speaker-name {
-            font-weight: 600;
-            color: #00ffff;
-        }
-
-        .dialogue-text {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            color: #ddd;
-        }
-
-        /* Minigame Styles */
-        .minigame-area {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 2rem;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            border: 2px solid rgba(0, 255, 255, 0.3);
-        }
-
-        .minigame h3 {
-            text-align: center;
-            margin-bottom: 1rem;
-            color: #00ffff;
-            font-size: 1.5rem;
-        }
-
-        .game-instruction {
-            text-align: center;
-            margin-bottom: 2rem;
-            color: #ccc;
-            font-size: 1.1rem;
-        }
-
-        /* Drag and Drop Game */
-        .drag-drop-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .drop-zones {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .drop-zone {
-            text-align: center;
-        }
-
-        .drop-zone h4 {
-            color: #00ffff;
-            margin-bottom: 0.5rem;
-        }
-
-        .drop-area {
-            min-height: 200px;
-            border: 2px dashed #00ffff;
-            border-radius: 10px;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .drop-area.drag-over {
-            background: rgba(0, 255, 255, 0.1);
-            border-color: #00ff00;
-        }
-
-        .draggable-items {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            justify-content: center;
-        }
-
-        .draggable-item {
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(45deg, #2a2a3e, #3a3a5e);
-            border: 2px solid rgba(0, 255, 255, 0.3);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            cursor: grab;
-            transition: all 0.3s ease;
-            user-select: none;
-        }
-
-        .draggable-item:hover {
-            transform: scale(1.05);
-            border-color: #00ffff;
-        }
-
-        .draggable-item.dragging {
-            opacity: 0.5;
-            cursor: grabbing;
-        }
-
-        /* Quiz Game */
-        .quiz-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .quiz-question {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            padding: 1.5rem;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            border-left: 4px solid #00ffff;
-        }
-
-        .quiz-options {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .quiz-option {
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(0, 255, 255, 0.3);
-            border-radius: 10px;
-            padding: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1.1rem;
-        }
-
-        .quiz-option:hover {
-            border-color: #00ffff;
-            background: rgba(0, 255, 255, 0.1);
-        }
-
-        .quiz-option.selected {
-            background: rgba(0, 255, 255, 0.2);
-            border-color: #00ffff;
-        }
-
-        .quiz-option.correct {
-            background: rgba(0, 255, 0, 0.2);
-            border-color: #00ff00;
-        }
-
-        .quiz-option.incorrect {
-            background: rgba(255, 0, 0, 0.2);
-            border-color: #ff0000;
-        }
-
-        /* Buttons */
-        .minigame-btn, .continue-btn {
-            background: linear-gradient(45deg, #00ffff, #0099cc);
-            border: none;
-            color: white;
-            padding: 1rem 2rem;
-            font-size: 1.1rem;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Rajdhani', sans-serif;
-            font-weight: 600;
-            margin: 1rem auto;
-            display: block;
-        }
-
-        .minigame-btn:hover, .continue-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.3);
-        }
-
-        /* Feedback Area */
-        .feedback-area {
-            max-width: 800px;
-            margin: 2rem auto;
-            padding: 2rem;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            border: 2px solid rgba(0, 255, 255, 0.3);
-            text-align: center;
-        }
-
-        .feedback-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-        }
-
-        .feedback-title {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            color: #00ffff;
-        }
-
-        .feedback-text {
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
-            color: #ddd;
-        }
-
-        .educational-tip {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 1.5rem;
-            border-radius: 10px;
-            border-left: 4px solid #00ffff;
-            margin-bottom: 2rem;
-            text-align: left;
-        }
-
-        .educational-tip h4 {
-            color: #00ffff;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Progress Bar */
-        .progress-container {
-            width: 100%;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.1);
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-        }
-
-        .progress-bar {
             height: 100%;
-            background: linear-gradient(90deg, #00ffff, #0099cc);
-            transition: width 0.3s ease;
-            width: 0%;
+            position: relative;
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 50%, #16213e 100%);
+            color: #fff;
+            font-family: 'Rajdhani', sans-serif;
+            overflow: hidden;
         }
 
-        /* Game Header */
-        .game-header {
-            background: rgba(0, 0, 0, 0.8);
-            padding: 1rem 2rem;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 999;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            backdrop-filter: blur(10px);
-        }
-
-        .game-title {
-            font-size: 1.5rem;
-            font-family: 'Orbitron', monospace;
-        }
-
-        .stats-bar {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .stat {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #00ffff;
-        }
-
-        .stat-icon {
-            font-size: 1.2rem;
-        }
-
-        /* Utility Classes */
-        .hidden {
-            display: none !important;
-        }
-
-        .fade-in {
-            animation: fadeIn 0.5s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .main-title {
-                font-size: 2.5rem;
-            }
-            
-            .story-content {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-            
-            .character-intro {
-                gap: 1rem;
-            }
-            
-            .character {
-                min-width: 120px;
-                padding: 1rem;
-            }
-            
-            .drag-drop-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .game-header {
-                flex-direction: column;
-                gap: 1rem;
-                padding: 1rem;
-            }
-            
-            .stats-bar {
-                gap: 1rem;
-            }
+        /* Remove old rotate warning styles since we're using the iframe template version */
+        .rotate-warning {
+            display: none;
         }
     </style>
 </head>
 <body>
-    <!-- Animated Background -->
-    <div class="animated-background">
-        <div class="matrix-rain"></div>
-        <div class="floating-particles" id="particles"></div>
-    </div>
-
-    <!-- Progress Bar -->
-    <div class="progress-container">
-        <div class="progress-bar" id="progress-bar"></div>
-    </div>
-
-    <!-- Game Header -->
-    <div class="game-header hidden" id="game-header">
-        <div class="game-title glitch-text">Alex's Digital Day</div>
-        <div class="stats-bar">
-            <div class="stat">
-                <span class="stat-icon">⭐</span>
-                <span id="score">0</span>
-            </div>
-            <div class="stat">
-                <span class="stat-icon">🎯</span>
-                <span id="level">Beginner</span>
-            </div>
-            <div class="stat">
-                <span class="stat-icon">📊</span>
-                <span id="progress-text">0/10</span>
-            </div>
+    <!-- Rotation Overlay (from iframe template) -->
+    <div id="rotation-overlay">
+        <div>
+            <svg fill="#ffffff" width="150" height="150" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 214.367 214.367" xml:space="preserve">
+                <path d="M202.403,95.22c0,46.312-33.237,85.002-77.109,93.484v25.663l-69.76-40l69.76-40v23.494
+                    c27.176-7.87,47.109-32.964,47.109-62.642c0-35.962-29.258-65.22-65.22-65.22s-65.22,29.258-65.22,65.22
+                    c0,9.686,2.068,19.001,6.148,27.688l-27.154,12.754c-5.968-12.707-8.994-26.313-8.994-40.441C11.964,42.716,54.68,0,107.184,0
+                    S202.403,42.716,202.403,95.22z"></path>
+            </svg>
+            <h1>Please rotate your screen</h1>
+            <p>This AI Safety Adventure is best experienced in landscape mode</p>
         </div>
     </div>
 
-    <!-- Game Container -->
-    <div class="game-container">
-        <!-- Intro Screen -->
-        <div class="intro-screen" id="intro-screen">
-            <div class="intro-content">
-                <h1 class="main-title">
-                    <span class="title-word glitch-text">Alex's</span>
-                    <span class="title-word glitch-text">Digital</span>
-                    <span class="title-word glitch-text">Day</span>
-                </h1>
-                <p class="subtitle">An AI Safety Adventure</p>
-                
-                <div class="character-intro">
-                    <div class="character">
-                        <div class="character-avatar">👨‍🎓</div>
-                        <h3>Alex</h3>
-                        <p>College Student</p>
-                    </div>
-                    <div class="character">
-                        <div class="character-avatar">👩‍💼</div>
-                        <h3>Sarah</h3>
-                        <p>Best Friend</p>
-                    </div>
-                    <div class="character">
-                        <div class="character-avatar">👩‍💻</div>
-                        <h3>Maya</h3>
-                        <p>AI Security Expert</p>
-                    </div>
-                </div>
-
-                <div class="intro-description">
-                    <p>In a world where AI can create fake videos, clone voices, and generate realistic photos, digital deception is everywhere. Help Alex navigate through AI-generated threats and learn to protect yourself online!</p>
-                </div>
-
-                <button class="start-btn" onclick="startGame()">
-                    <span class="btn-icon">🚀</span>
-                    Begin Adventure
-                </button>
-            </div>
+    <!-- Main Container (replaces iframe in template) -->
+    <div id="main-container">
+        <!-- Background Animation -->
+        <div class="animated-background">
+            <div class="glitch-overlay"></div>
+            <div class="matrix-rain"></div>
+            <div class="floating-particles"></div>
         </div>
 
-        <!-- Story Screen -->
-        <div class="story-screen" id="story-screen">
-            <div class="story-content">
-                <div class="scene-image">
-                    <div class="scene-placeholder" id="scene-placeholder">📱</div>
-                </div>
-                <div class="story-text">
-                    <h2 class="story-title glitch-text" id="story-title">The Morning Surprise</h2>
-                    <div class="dialogue-box">
-                        <div class="speaker">
-                            <div class="speaker-avatar" id="speaker-avatar">👨‍🎓</div>
-                            <span class="speaker-name" id="speaker-name">Alex</span>
+        <!-- Audio Elements -->
+        <audio id="background-music" loop>
+            <source src="/assets/audio/background-music.mp3" type="audio/mpeg">
+        </audio>
+        <audio id="success-sound">
+            <source src="assets/audio/success.mp3" type="audio/mpeg">
+        </audio>
+        <audio id="error-sound">
+            <source src="assets/audio/error.mp3" type="audio/mpeg">
+        </audio>
+        <audio id="click-sound">
+            <source src="assets/audio/click.mp3" type="audio/mpeg">
+        </audio>
+
+        <!-- Game Container -->
+        <div id="game-container" class="game-container">
+            <!-- Intro Screen -->
+            <div id="intro-screen" class="intro-screen">
+                <div class="intro-content">
+                    <div class="title-animation" style="margin-top: 40px;">
+                        <h1 class="main-title">
+                            <span class="title-word glitch-text" style="--delay: 0s">Alex's</span>
+                            <span class="title-word glitch-text" style="--delay: 0.5s">Digital</span>
+                            <span class="title-word glitch-text" style="--delay: 1s">Day</span>
+                        </h1>
+                        <p class="subtitle">An AI Safety Adventure</p>
+                    </div>
+                    
+                    <div class="character-intro">
+                        <div class="character alex">
+                            <div class="character-avatar">👨‍🎓</div>
+                            <h3>Alex</h3>
+                            <p>College Student</p>
                         </div>
-                        <p class="dialogue-text" id="dialogue-text">It's 8 AM and I just woke up to an urgent message from my bank about suspicious activity on my account. But something feels off about this message...</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Minigame Area -->
-        <div class="minigame-area hidden" id="minigame-area">
-            <!-- Drag and Drop Game -->
-            <div class="minigame hidden" id="drag-drop-game">
-                <h3>Help Alex identify real vs AI-generated images!</h3>
-                <div class="game-instruction">Drag the images to the correct category</div>
-                <div class="drag-drop-container">
-                    <div class="drop-zones">
-                        <div class="drop-zone">
-                            <h4>🖼️ Real Images</h4>
-                            <div class="drop-area" id="real-drop" data-category="real"></div>
+                        <div class="character sarah">
+                            <div class="character-avatar">👩‍💼</div>
+                            <h3>Sarah</h3>
+                            <p>Best Friend</p>
                         </div>
-                        <div class="drop-zone">
-                            <h4>🤖 AI Generated</h4>
-                            <div class="drop-area" id="ai-drop" data-category="ai"></div>
+                        <div class="character maya">
+                            <div class="character-avatar">👩‍💻</div>
+                            <h3>Maya</h3>
+                            <p>AI Security Expert</p>
                         </div>
                     </div>
-                    <div class="draggable-items" id="draggable-items"></div>
-                </div>
-                <button class="minigame-btn" onclick="checkDragDrop()">Check Answer</button>
-            </div>
 
-            <!-- Quiz Game -->
-            <div class="minigame hidden" id="quiz-game">
-                <div class="quiz-container">
-                    <h3>AI Safety Quiz</h3>
-                    <div class="game-instruction">Select the best answer</div>
-                    <div class="quiz-question" id="quiz-question"></div>
-                    <div class="quiz-options" id="quiz-options"></div>
+                    <div class="intro-description">
+                        <p>In a world where AI can create fake videos, clone voices, and generate realistic photos, digital deception is everywhere. Help Alex navigate through AI-generated threats and learn to protect yourself online!</p>
+                    </div>
+
+                    <button class="start-btn" onclick="showIntroStory()" style="margin-top: -20px; transform: scale(0.9);">
+                        <span class="btn-icon">🚀</span>
+                        Begin Adventure
+                    </button>
                 </div>
             </div>
-        </div>
 
-        <!-- Feedback Area -->
-        <div class="feedback-area hidden" id="feedback-area">
-            <div class="feedback-icon" id="feedback-icon">✅</div>
-            <h3 class="feedback-title" id="feedback-title">Great Job!</h3>
-            <p class="feedback-text" id="feedback-text">You correctly identified the AI-generated content!</p>
-            <div class="educational-tip">
-                <h4>💡 Learning Point</h4>
-                <p id="educational-text">Always verify suspicious messages by contacting the organization directly through official channels, not through links or phone numbers provided in the message.</p>
+            <!-- Introduction Story Screen -->
+            <div id="intro-story-screen" class="intro-story-screen hidden">
+                <div class="story-intro-content">
+                    <h2 class="glitch-text">The Rise of AI Deception</h2>
+                    <div class="story-panels" id="story-panels">
+                        <!-- Story panels will be populated by JavaScript -->
+                    </div>
+                    <div class="story-navigation">
+                        <button id="prev-panel" class="nav-btn" onclick="previousPanel()" disabled>← Previous</button>
+                        <span id="panel-indicator">1 / 5</span>
+                        <button id="next-panel" class="nav-btn" onclick="nextPanel()">Next →</button>
+                        <button id="start-game" class="start-btn hidden" onclick="startStory()">
+                            <span class="btn-icon">🎮</span>
+                            Start Game
+                        </button>
+                    </div>
+                </div>
             </div>
-            <button class="continue-btn" onclick="continueStory()">Continue Adventure</button>
+
+            <!-- Game Header -->
+            <header id="game-header" class="game-header hidden">
+                <div class="character-status">
+                    <div class="current-character">
+                        <div id="current-avatar" class="character-avatar small">👨‍🎓</div>
+                        <span id="current-name">Alex</span>
+                    </div>
+                </div>
+                <h1 class="game-title glitch-text">Alex's Digital Day</h1>
+                <div class="stats-bar">
+                    <div class="stat">
+                        <span class="stat-icon">⭐</span>
+                        <span id="score">0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-icon">🏆</span>
+                        <span id="level">Beginner</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-icon">📊</span>
+                        <span id="progress">0/10</span>
+                    </div>
+                    <button id="audio-toggle" class="audio-toggle" onclick="toggleAudio()">🔊</button>
+                </div>
+            </header>
+
+            <!-- Progress Bar -->
+            <div id="progress-container" class="progress-container hidden">
+                <div id="progress-bar" class="progress-bar"></div>
+            </div>
+
+            <!-- Main Game Area -->
+            <main id="game-main" class="game-main hidden">
+                <!-- Story Content -->
+                <div id="story-content" class="story-content">
+                    <div class="scene-image">
+                        <img id="scene-img" src="/assets/scenes/scene01-morning-surprise.png" alt="Scene" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div style="display:none; width:250px; height:150px; background:#e5e7eb; border-radius:12px; align-items:center; justify-content:center; color:#6b7280; font-size:3rem;">🖼️</div>
+                        <div class="characters-overlay" id="characters-overlay"></div>
+                    </div>
+                    <div class="story-text">
+                        <h2 id="story-title">Welcome to Alex's Day!</h2>
+                        <div class="dialogue-box">
+                            <div class="speaker" id="speaker">
+                                <div class="speaker-avatar" id="speaker-avatar">👨‍🎓</div>
+                                <span id="speaker-name">Alex</span>
+                            </div>
+                            <p id="dialogue-text">It's 8 AM and I'm getting ready for another day at college. Little do I know, I'm about to encounter some serious digital deception!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mini-Game Area -->
+                <div id="minigame-area" class="minigame-area">
+                    <!-- Drag and Drop Game -->
+                    <div id="drag-drop-game" class="minigame hidden">
+                        <h3>Help Alex identify real vs AI-generated images!</h3>
+                        <div class="game-instruction">Drag the images to the correct category</div>
+                        <div class="drag-drop-container">
+                            <div class="drop-zones">
+                                <div class="drop-zone" data-category="real">
+                                    <h4>🖼️ Real Images</h4>
+                                    <div class="drop-area" id="real-drop"></div>
+                                </div>
+                                <div class="drop-zone" data-category="ai">
+                                    <h4>🤖 AI Generated</h4>
+                                    <div class="drop-area" id="ai-drop"></div>
+                                </div>
+                            </div>
+                            <div class="draggable-items" id="draggable-items"></div>
+                        </div>
+                        <button id="check-drag-drop" class="minigame-btn" onclick="checkDragDrop()">Check Answer</button>
+                    </div>
+
+                    <!-- Mix and Match Game -->
+                    <div id="mix-match-game" class="minigame hidden">
+                        <h3>Match the AI threats with their warning signs!</h3>
+                        <div class="game-instruction">Click to connect threats with their warning signs</div>
+                        <div class="mix-match-container">
+                            <div class="threats-column">
+                                <h4>🚨 AI Threats</h4>
+                                <div class="match-items" id="threats-list"></div>
+                            </div>
+                            <div class="signs-column">
+                                <h4>⚠️ Warning Signs</h4>
+                                <div class="match-items" id="signs-list"></div>
+                            </div>
+                        </div>
+                        <button id="check-mix-match" class="minigame-btn" onclick="checkMixMatch()">Check Matches</button>
+                    </div>
+
+                    <!-- Spot the Difference Game -->
+                    <div id="spot-difference-game" class="minigame hidden">
+                        <h3>Spot the deepfake inconsistencies!</h3>
+                        <div class="game-instruction">Click on the suspicious areas in the image (find them one by one)</div>
+                        <div class="spot-container">
+                            <div class="spot-image-container">
+                                <img id="spot-image" src="/assets/minigames/spot-deepfake-video-call.png" alt="Spot the difference" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div style="display:none; width:400px; height:250px; background:#e5e7eb; border-radius:8px; align-items:center; justify-content:center; color:#6b7280; font-size:3rem;">🔍</div>
+                                <div class="spot-markers" id="spot-markers"></div>
+                            </div>
+                            <div class="spots-found">
+                                <h4>Inconsistencies Found: <span id="spots-count">0/3</span></h4>
+                                <div id="found-spots"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Sorting Game -->
+                    <div id="timeline-game" class="minigame hidden">
+                        <h3>Arrange the verification steps in correct order!</h3>
+                        <div class="game-instruction">Drag the steps to create the correct verification timeline</div>
+                        <div class="timeline-container">
+                            <div class="timeline-slots" id="timeline-slots"></div>
+                            <div class="timeline-items" id="timeline-items"></div>
+                        </div>
+                        <button id="check-timeline" class="minigame-btn" onclick="checkTimeline()">Check Order</button>
+                    </div>
+
+                    <!-- Pattern Recognition Game -->
+                    <div id="pattern-game" class="minigame hidden">
+                        <h3>Identify the fake review patterns!</h3>
+                        <div class="game-instruction">Select all reviews that show signs of AI generation</div>
+                        <div class="reviews-container" id="reviews-container"></div>
+                        <button id="check-patterns" class="minigame-btn" onclick="checkPatterns()">Check Selection</button>
+                    </div>
+
+                     <!-- Quiz Game -->
+                    <div id="quiz-game" class="minigame hidden">
+                        <h3>Quick AI Safety Quiz</h3>
+                        <div class="game-instruction">Select the best answer below</div>
+                        <p id="quiz-question" class="quiz-question"></p>
+                        <div id="quiz-options" class="quiz-options-container"></div>
+                    </div>
+                    
+                </div>
+
+                <!-- Story Choices -->
+                <div id="story-choices" class="story-choices">
+                    <div id="choices-container" class="choices-container">
+                        <button class="choice-btn" onclick="nextScene()">
+                            <span class="choice-icon">▶️</span>
+                            Continue Story
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Feedback Area -->
+                <div id="feedback-area" class="feedback-area hidden">
+                    <div class="feedback-content">
+                        <div id="feedback-icon" class="feedback-icon"></div>
+                        <h3 id="feedback-title"></h3>
+                        <p id="feedback-text"></p>
+                        <div class="educational-tip">
+                            <h4>💡 Learning Point</h4>
+                            <p id="educational-text"></p>
+                        </div>
+                        <div class="feedback-actions">
+                            <button id="continue-btn" class="continue-btn" onclick="continueStory()">Continue</button>
+                            <button id="retry-btn" class="retry-btn hidden" onclick="retryChallenge()">Try Again</button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Achievement Popup -->
+            <div id="achievement-popup" class="achievement-popup hidden">
+                <div class="achievement-content">
+                    <div class="achievement-badge">🏆</div>
+                    <h3>Achievement Unlocked!</h3>
+                    <p id="achievement-text"></p>
+                </div>
+            </div>
+
+            <!-- Real-Life Impact Warning -->
+            <div id="impact-warning" class="impact-warning hidden">
+                <div class="impact-content">
+                    <div class="warning-icon">⚠️</div>
+                    <h3>Real-Life Impact</h3>
+                    <p id="impact-text"></p>
+                    <div class="impact-consequences">
+                        <h4>Potential Consequences:</h4>
+                        <ul id="consequences-list"></ul>
+                    </div>
+                    <button class="impact-close-btn" onclick="closeImpactWarning()">Understood</button>
+                </div>
+            </div>
+
+            <!-- Image Modal -->
+            <div id="image-modal" class="image-modal hidden">
+                <div class="image-modal-close" onclick="closeImageModal()">×</div>
+                <img id="modal-image" src="/placeholder.svg" alt="Full size view">
+                <div class="image-modal-instructions">
+                    Click anywhere to close • Examine the details carefully • Scroll to see full content
+                </div>
+            </div>
         </div>
     </div>
 
-    <script>
-        // Game State
-        let gameState = {
-            currentScene: 0,
-            score: 0,
-            level: 'Beginner',
-            progress: 0,
-            maxProgress: 10
-        };
-
-        // Story Data
-        const storyScenes = [
-            {
-                title: "The Morning Surprise",
-                speaker: "Alex",
-                avatar: "👨‍🎓",
-                text: "It's 8 AM and I just woke up to an urgent message from my bank about suspicious activity on my account. But something feels off about this message...",
-                sceneIcon: "📱",
-                minigame: "quiz",
-                question: "What should Alex do first when receiving a suspicious message claiming to be from their bank?",
-                options: [
-                    { text: "Click the link immediately to check the account", correct: false },
-                    { text: "Call the bank using the official number from their website", correct: true },
-                    { text: "Reply to the message asking for more details", correct: false },
-                    { text: "Forward the message to friends for advice", correct: false }
-                ]
-            },
-            {
-                title: "The Deepfake Call",
-                speaker: "Sarah",
-                avatar: "👩‍💼",
-                text: "Alex, I need your help! I'm in trouble and need you to send me money right away. This is urgent!",
-                sceneIcon: "📞",
-                minigame: "quiz",
-                question: "Alex receives a video call from Sarah asking for emergency money. What red flags should Alex look for?",
-                options: [
-                    { text: "Unusual speech patterns or audio quality", correct: true },
-                    { text: "The request for money seems out of character", correct: false },
-                    { text: "The video quality is poor or choppy", correct: false },
-                    { text: "All of the above", correct: false }
-                ]
-            },
-            {
-                title: "Social Media Confusion",
-                speaker: "Alex",
-                avatar: "👨‍🎓",
-                text: "I'm seeing a viral video of a celebrity saying something controversial. Everyone's sharing it, but I want to verify if it's real before I share it too.",
-                sceneIcon: "📱",
-                minigame: "drag-drop",
-                items: [
-                    { id: 1, type: "real", icon: "📰", label: "News Article" },
-                    { id: 2, type: "ai", icon: "🎭", label: "Deepfake Video" },
-                    { id: 3, type: "real", icon: "📸", label: "Original Photo" },
-                    { id: 4, type: "ai", icon: "🤖", label: "AI Portrait" }
-                ]
-            },
-            {
-                title: "The Job Scam",
-                speaker: "Maya",
-                avatar: "👩‍💻",
-                text: "Alex, I've been tracking AI-generated job scams. They're using fake company profiles and AI-written job descriptions to steal personal information.",
-                sceneIcon: "💼",
-                minigame: "quiz",
-                question: "How can you identify an AI-generated job scam?",
-                options: [
-                    { text: "Generic company description with no specific details", correct: true },
-                    { text: "Asks for personal information before interview", correct: false },
-                    { text: "Too good to be true salary for minimal work", correct: false },
-                    { text: "All of the above", correct: false }
-                ]
-            },
-            {
-                title: "The Final Challenge",
-                speaker: "Alex",
-                avatar: "👨‍🎓",
-                text: "Now I understand the dangers of AI-generated content. I need to help others recognize and protect themselves from these threats too!",
-                sceneIcon: "🎯",
-                minigame: "quiz",
-                question: "What's the most important principle for staying safe from AI-generated threats?",
-                options: [
-                    { text: "Never trust any digital content", correct: false },
-                    { text: "Verify information through multiple reliable sources", correct: true },
-                    { text: "Only use social media from trusted friends", correct: false },
-                    { text: "Avoid using technology altogether", correct: false }
-                ]
-            }
-        ];
-
-        // Initialize floating particles
-        function initializeParticles() {
-            const particles = document.getElementById('particles');
-            for (let i = 0; i < 50; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 6 + 's';
-                particle.style.animationDuration = (Math.random() * 4 + 4) + 's';
-                particles.appendChild(particle);
-            }
-        }
-
-        // Start the game
-        function startGame() {
-            document.getElementById('intro-screen').style.display = 'none';
-            document.getElementById('story-screen').style.display = 'block';
-            document.getElementById('game-header').classList.remove('hidden');
-            loadScene(0);
-        }
-
-        // Load a story scene
-        function loadScene(sceneIndex) {
-            if (sceneIndex >= storyScenes.length) {
-                showGameComplete();
-                return;
-            }
-
-            const scene = storyScenes[sceneIndex];
-            gameState.currentScene = sceneIndex;
-            
-            // Update story content
-            document.getElementById('story-title').textContent = scene.title;
-            document.getElementById('speaker-name').textContent = scene.speaker;
-            document.getElementById('speaker-avatar').textContent = scene.avatar;
-            document.getElementById('dialogue-text').textContent = scene.text;
-            document.getElementById('scene-placeholder').textContent = scene.sceneIcon;
-
-            // Update progress
-            gameState.progress = sceneIndex + 1;
+    <script src="script.js"></script>
+</body>
+</html>
