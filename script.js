@@ -487,7 +487,7 @@ const storyScenes = [
     title: "Quick AI Safety Quiz",
     image: "/assets/scenes/scene10-final-challenge.png",
     speaker: "maya",
-    dialogue: "Before we finish, here's a quick question to test your knowledge!",
+    dialogue: "Before we finish, here's a quick question to test your knowledge! Which of the following is the best way to confirm if a message is real?",
     minigame: "quiz",
     minigameData: {
       question: "Which of the following is the best way to confirm if a message is real?",
@@ -1409,7 +1409,7 @@ function showFinalResults() {
 
   document.getElementById("story-title").textContent = "Mission Complete!"
   const sceneImg = document.getElementById("scene-img")
-  sceneImg.src = "/assets/scenes/scene10-final-challenge.png" // Set the new image source
+  sceneImg.src = "/assets/scenes/mission-complete.png" // Set the new image source
   sceneImg.style.display = "block" // Ensure the image is displayed
   if (sceneImg.nextElementSibling) {
     sceneImg.nextElementSibling.style.display = "none" // Hide the placeholder div
