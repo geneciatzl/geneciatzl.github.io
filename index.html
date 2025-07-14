@@ -22,13 +22,13 @@
         <source src="/assets/audio/background-music.mp3" type="audio/mpeg">
     </audio>
     <audio id="success-sound">
-        <source src="/assets/audio/success.mp3" type="audio/mpeg">
+        <source src="assets/audio/success.mp3" type="audio/mpeg">
     </audio>
     <audio id="error-sound">
-        <source src="/assets/audio/error.mp3" type="audio/mpeg">
+        <source src="assets/audio/error.mp3" type="audio/mpeg">
     </audio>
     <audio id="click-sound">
-        <source src="/assets/audio/click.mp3" type="audio/mpeg">
+        <source src="assets/audio/click.mp3" type="audio/mpeg">
     </audio>
 
     <!-- Mobile Rotation Warning -->
@@ -229,6 +229,15 @@
                     <div class="reviews-container" id="reviews-container"></div>
                     <button id="check-patterns" class="minigame-btn" onclick="checkPatterns()">Check Selection</button>
                 </div>
+
+                 <!-- Quiz Game -->
+                <div id="quiz-game" class="minigame hidden">
+                    <h3>Quick AI Safety Quiz</h3>
+                    <div class="game-instruction">Select the best answer below</div>
+                    <p id="quiz-question" class="quiz-question"></p>
+                    <div id="quiz-options" class="quiz-options-container"></div>
+                </div>
+                
             </div>
 
             <!-- Story Choices -->
