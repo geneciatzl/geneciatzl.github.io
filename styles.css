@@ -72,8 +72,8 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: radial-gradient(2px 2px at 20px 30px, rgba(0, 255, 0, 0.1), transparent),
-    radial-gradient(2px 2px at 40px 70px, rgba(0, 255, 255, 0.1), transparent),
+  background-image: radial-gradient(1px 1px at 20px 30px, rgba(0, 255, 0, 0.1), transparent),
+    radial-gradient(1px 1px at 40px 70px, rgba(0, 255, 255, 0.1), transparent),
     radial-gradient(1px 1px at 90px 40px, rgba(255, 0, 255, 0.1), transparent);
   background-repeat: repeat;
   background-size: 100px 100px;
@@ -1476,6 +1476,30 @@ body {
 .draggable-item.has-image:hover::after {
   opacity: 1;
 }
+
+.quiz-options-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.quiz-option-btn {
+  padding: 12px 18px;
+  background-color: #1f2937;
+  color: #f9fafb;
+  border: 2px solid #3b82f6;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.quiz-option-btn:hover {
+  background-color: #3b82f6;
+  color: white;
+}
+
 
 /* Utility Classes */
 .hidden {
