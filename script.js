@@ -1,5 +1,5 @@
 // Game State
-let currentScene = 0
+let currentScene = 1
 let score = 0
 let correctAnswers = 0
 let currentMinigame = null
@@ -484,33 +484,32 @@ const storyScenes = [
   },
   {
     id: 10,
-    title: "Final Challenge",
+    title: "Quick AI Safety Quiz",
     image: "/assets/scenes/scene10-final-challenge.png",
-    speaker: "alex",
-    dialogue:
-      "A 'bank representative' is video calling with a deepfake face, cloned voice, and my real account info. This is the ultimate test!",
-    minigame: "timeline",
+    speaker: "maya",
+    dialogue: "Before we finish, here's a quick question to test your knowledge!",
+    minigame: "quiz",
     minigameData: {
-      steps: [
-        { id: "step1", text: "Receive suspicious call", order: 1 },
-        { id: "step2", text: "Don't provide any info", order: 2 },
-        { id: "step3", text: "Hang up immediately", order: 3 },
-        { id: "step4", text: "Call bank directly", order: 4 },
-        { id: "step5", text: "Report the incident", order: 5 },
+      question: "Which of the following is the best way to confirm if a message is real?",
+      options: [
+        { text: "Click the link in the message to verify", correct: false },
+        { text: "Reply immediately to the sender", correct: false },
+        { text: "Cross-check using known contact methods", correct: true },
+        { text: "Ignore all messages", correct: false },
       ],
     },
     educational:
-      "Advanced AI attacks combine multiple deception techniques. Always verify through independent, official channels.",
+      "Always verify suspicious messages using independent, known contact channels. Never trust links or requests without verification.",
     wrongChoiceImpact: {
-      text: "Falling for sophisticated multi-vector AI attacks can result in complete financial compromise.",
+       text: "Relying solely on messages or links can lead to falling for phishing or impersonation scams.",
       consequences: [
-        "Complete bank account takeover",
-        "Credit cards maxed out by criminals",
-        "Loans taken out in your name",
-        "Years of financial and legal recovery needed",
+       "You may be redirected to fake sites",
+        "Sensitive info could be stolen",
+        "Future attacks may target you again",
+        "Accounts can be compromised",
       ],
     },
-  },
+  }
 ]
 
 // Minigame state
@@ -522,6 +521,7 @@ let patternState = { selectedReviews: [], correctSelections: 0 }
 
 // Initialize Game
 function initGame() {
+   score = 0
   // Show intro screen initially
   document.getElementById("intro-screen").style.display = "flex"
 
@@ -655,7 +655,7 @@ function showScene(index) {
 
 // Hide all minigames
 function hideAllMinigames() {
-  const minigames = ["drag-drop-game", "mix-match-game", "spot-difference-game", "timeline-game", "pattern-game"]
+  const minigames = ["drag-drop-game", "mix-match-game", "spot-difference-game", "timeline-game", "pattern-game", "quiz-game"]
   minigames.forEach((id) => {
     document.getElementById(id).classList.add("hidden")
   })
@@ -678,6 +678,9 @@ function setupMinigame(type, data) {
       break
     case "pattern":
       setupPatternGame(data)
+      break
+      case "quiz":
+      setupQuizGame(data)
       break
   }
 }
@@ -972,39 +975,6 @@ function setupSpotDifferenceGame(data) {
 
   image.onload = () => {
     console.log("Image loaded successfully")
-
-    // Add coordinate tracking for debugging
-    const coordinateDisplay = document.createElement("div")
-    coordinateDisplay.id = "coordinate-display"
-    coordinateDisplay.style.cssText = `
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background: rgba(0, 0, 0, 0.8);
-  color: #00ffff;
-  padding: 5px 10px;
-  border-radius: 5px;
-  font-family: 'Orbitron', monospace;
-  font-size: 12px;
-  pointer-events: none;
-  z-index: 1000;
-  border: 1px solid rgba(0, 255, 255, 0.3);
-`
-    coordinateDisplay.textContent = "Hover over image to see coordinates"
-    document.getElementById("spot-difference-game").appendChild(coordinateDisplay)
-
-    // Add mouse tracking to image
-    image.onmousemove = (e) => {
-      const rect = image.getBoundingClientRect()
-      const x = Math.round(e.clientX - rect.left)
-      const y = Math.round(e.clientY - rect.top)
-      coordinateDisplay.textContent = `Coordinates: (${x}, ${y})`
-      coordinateDisplay.style.display = "block"
-    }
-
-    image.onmouseleave = () => {
-      coordinateDisplay.style.display = "none"
-    }
   }
 
   // Add click handler to image
@@ -1308,6 +1278,28 @@ function showMinigameFeedback(success, correct, total) {
   showRegularFeedback(success, correct, total, scene)
 }
 
+function setupQuizGame(data) {
+  document.getElementById("quiz-game").classList.remove("hidden")
+  const container = document.getElementById("quiz-options")
+  const questionText = document.getElementById("quiz-question")
+
+  questionText.textContent = data.question
+  container.innerHTML = ""
+
+  data.options.forEach((opt, index) => {
+    const btn = document.createElement("button")
+    btn.className = "quiz-option-btn"
+    btn.textContent = opt.text
+    btn.onclick = () => {
+      const correct = opt.correct ? 1 : 0
+      const total = 1
+      showMinigameFeedback(opt.correct, correct, total)
+    }
+    container.appendChild(btn)
+  })
+}
+
+
 function showRegularFeedback(success, correct, total, scene) {
   const feedbackArea = document.getElementById("feedback-area")
   const feedbackIcon = document.getElementById("feedback-icon")
@@ -1417,8 +1409,11 @@ function showFinalResults() {
 
   document.getElementById("story-title").textContent = "Mission Complete!"
   const sceneImg = document.getElementById("scene-img")
-  sceneImg.style.display = "none"
-  sceneImg.nextElementSibling.style.display = "flex"
+  sceneImg.src = "/assets/scenes/scene10-final-challenge.png" // Set the new image source
+  sceneImg.style.display = "block" // Ensure the image is displayed
+  if (sceneImg.nextElementSibling) {
+    sceneImg.nextElementSibling.style.display = "none" // Hide the placeholder div
+  }
   document.getElementById("speaker-avatar").textContent = "🎉"
   document.getElementById("speaker-name").textContent = "Congratulations!"
   document.getElementById("speaker-name").style.color = "#00cc66"
@@ -1497,6 +1492,14 @@ function updateProgress() {
   const progressBar = document.getElementById("progress-bar")
   const percentage = (currentScene / totalScenes) * 100
   progressBar.style.width = percentage + "%"
+  document.getElementById("progress").textContent = `${currentScene}/${totalScenes}`
+}
+
+function nextScene() {
+  if (currentScene < totalScenes) {
+    currentScene++;
+    updateProgress();
+  }
 }
 
 // Show Achievement
